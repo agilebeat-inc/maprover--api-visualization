@@ -1,0 +1,2 @@
+###---- amenity-firestation 1
+GET https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/api/describe
