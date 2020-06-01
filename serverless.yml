@@ -50,6 +50,22 @@ package:
   individually: true
 
 functions:
+  query:
+    runtime: nodejs12.x
+    handler: handler.query
+    events:
+      - http:
+        path: query
+        method: get
+          cors: true
+          private: false
+        documentation:
+            summary: "Populate this"
+            description: ""
+            tags:
+              - "Api"
+              - "Visualization"
+
   api-describe:
     runtime: nodejs12.x
     handler: describe.inferHandler
@@ -88,18 +104,17 @@ plugins:
   - serverless-plugin-custom-roles
   - serverless-python-requirements
   - serverless-domain-manager
-
 custom:
   customDomain:
     domainName: 'visualization.api.maprover.io'
     stage: ${self:provider.stage}
     basePath: ''
-    certificateName: '*..api.maprover.io'
+    certificateName: '*.api.maprover.io'
     createRoute53Record: false
     endpointType: 'edge'
     securityPolicy: 'tls_1_2'
     apiType: 'rest'
-    enabled: fale
+    enabled: false
   documentation:
     api:
       info:

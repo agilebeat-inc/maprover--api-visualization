@@ -9,6 +9,7 @@ These commands should be run in the container shell
 1. Install node tensorflow module:
 ```
 npm install @tensorflow/tfjs
+npm install graphql
 ```
 
 2. Optimize distribution:
@@ -18,7 +19,6 @@ npm prune --production
 
 3. Install serverless plugins for development:
 ```
-
 serverless plugin install -n serverless-python-requirements --save-dev
 serverless plugin install -n serverless-reqvalidator-plugin --save-dev
 serverless plugin install -n serverless-aws-documentation --save-dev
