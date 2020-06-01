@@ -10,6 +10,7 @@ These commands should be run in the container shell
 ```
 npm install @tensorflow/tfjs
 npm install graphql
+npm install curlrequest
 ```
 
 2. Optimize distribution:
