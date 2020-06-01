@@ -18,10 +18,6 @@ def create_dynamodb_table():
                     'AttributeName': 'state_county',
                     'AttributeType': 'S',
                 },
-                {
-                    'AttributeName': 'fips',
-                    'AttributeType': 'S',
-                }
             ],
             KeySchema=[
                 {
@@ -33,31 +29,9 @@ def create_dynamodb_table():
                     'KeyType': 'RANGE',
                 },
             ],
-            GlobalSecondaryIndexes=[ 
-                { 
-                    "IndexName": "fips_global_secondary_idx",
-                    "KeySchema": [
-                        {
-                            'AttributeName': 'fips',
-                            'KeyType': 'HASH',
-                        },
-                        {
-                            'AttributeName': 'date',
-                            'KeyType': 'RANGE',
-                        },
-                    ],
-                    'Projection': {
-                        'ProjectionType': 'ALL',
-                    },
-                    'ProvisionedThroughput': {
-                        'ReadCapacityUnits': 5,
-                        'WriteCapacityUnits': 5,
-                    }
-                },
-            ],
             ProvisionedThroughput={
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5,
+                'ReadCapacityUnits': 1024,
+                'WriteCapacityUnits': 1024,
             },
             TableName='us-counties-covid-19',
         )
@@ -78,18 +52,20 @@ def get_covid_19_data_as_json():
         for col_name in col_names:
             row_dic[col_name] = row[i]
             i += 1
+        row_dic['state_county'] = row[2] + '_' + row[1]
         items.append(row_dic)
     return items
 
 def batch_write(items):
    dynamodb = boto3.resource('dynamodb')
-   db = dynamodb.Table('covid19-live-nyt')
+   db = dynamodb.Table('us-counties-covid-19')
 
    with db.batch_writer() as batch:
       for item in items:
          batch.put_item(Item=item)
+         print(item)
 
 if __name__ == '__main__':
-    create_dynamodb_table()
+    #create_dynamodb_table()
     items = get_covid_19_data_as_json()
     batch_write(items)
