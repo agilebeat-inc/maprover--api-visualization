@@ -52,18 +52,19 @@ package:
 functions:
   query:
     runtime: nodejs12.x
-    handler: handler.query
+    handler: data-src-vis-covid19.query
     events:
       - http:
-        path: query
-        method: get
+          path: query
+          method: get
           cors: true
           private: false
-        documentation:
-            summary: "Populate this"
-            description: ""
+          documentation:
+            summary: "Query for the visalization data for the COVID-19 data set"
+            description: "Query for the visalization data for the COVID-19 data set."
             tags:
               - "Api"
+              - "COVID-19"
               - "Visualization"
 
   api-describe:
