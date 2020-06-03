@@ -1,0 +1,22 @@
+{
+  "name": "maprover--api-visualization",
+  "version": "0.0.1",
+  "description": "Visualization APIs for maprover ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon local.js"
+  },
+  "author": "Marek Dwulit",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.14.1",
+    "apollo-server-lambda": "^2.14.1",
+    "aws-sdk": "^2.688.0",
+    "graphql": "^15.0.0",
+    "graphql-date": "^1.0.3",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
