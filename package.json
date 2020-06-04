@@ -14,7 +14,9 @@
     "aws-sdk": "^2.688.0",
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "momentjs": "^2.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

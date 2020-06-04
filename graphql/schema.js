@@ -1,6 +1,7 @@
 const graphql = require('graphql');
 const _ = require('lodash');
-const {GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString} = graphql;
+const moment = require('moment');
+const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = graphql;
 
 //dummy data
 var statesData = [
@@ -16,7 +17,7 @@ var statesData = [
     {
         "cases": "200",
         "county": "Butler",
-        "date": "2020-05-12",
+        "date": "2020-04-12",
         "deaths": "6",
         "fips": "21031",
         "state": "Kentucky",
@@ -36,23 +37,35 @@ var statesData = [
 const StateType = new GraphQLObjectType({
     name: 'State',
     fields: () => ({
-        state_county: {type: GraphQLString},
-        state: {type: GraphQLString},
-        county: {type: GraphQLString},
-        date: {type: GraphQLString},
-        cases: {type: GraphQLString},
-        deaths: {type: GraphQLString}
+        state_county: { type: GraphQLString },
+        state: { type: GraphQLString },
+        county: { type: GraphQLString },
+        date: { type: GraphQLString },
+        cases: { type: GraphQLInt },
+        deaths: { type: GraphQLInt }
     }),
 });
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        state: {
+        query: {
             type: GraphQLList(StateType),
-            args: {state: {type: GraphQLString}},
+            args: {
+                state: { type: GraphQLString },
+                start: { type: GraphQLString },
+                end: { type: GraphQLString }
+            },
             resolve(parent, args) {
-                let retset = _.filter(statesData, function(o) {return (o.state == args.state)});
+                let retset = _.filter(statesData, function (o) {
+                    let odate = moment(o.date);
+                    let start = moment(args.start);
+                    let end = moment(args.end);
+                    let isAfterStart = (start < odate);
+                    let isBeofreOrEqualToEnd = (odate <= end);
+                    console.log(o.state, args.state, (o.state == args.state), isAfterStart, isBeofreOrEqualToEnd);
+                    return ((o.state == args.state) && isAfterStart && isBeofreOrEqualToEnd)
+                });
                 return retset;
             }
         }
