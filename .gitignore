@@ -49,9 +49,9 @@ build/Release
 #node_modules
 
 # Serverless
-.serverless/**
 package-lock.json
-package.json
+.serverless
+.env
 
 #node_modules
 node_modules
