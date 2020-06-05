@@ -1,6 +1,6 @@
 # serverless.yml
 
-service: apollo-lambda
+service: apollo-lambda-covid-19
 provider:
   name: aws
   runtime: nodejs12.x
