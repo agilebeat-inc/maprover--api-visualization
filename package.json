@@ -9,8 +9,10 @@
   "author": "Marek Dwulit",
   "license": "MIT",
   "dependencies": {
-    "apollo-server": "^2.14.1",
-    "apollo-server-lambda": "^2.14.1",
+    "@tensorflow/tfjs": "^2.0.0",
+    "apollo-server": "^2.14.2",
+    "apollo-server-lambda": "^2.14.2",
+    "curlrequest": "^1.0.1",
     "errorhandler": "^1.5.1",
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",

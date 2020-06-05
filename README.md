@@ -11,6 +11,12 @@ These commands should be run in the container shell
 npm install @tensorflow/tfjs
 npm install graphql
 npm install curlrequest
+npm install apollo-server
+npm install apollo-server-lambda
+npm install errorhandler
+npm install lodash
+npm install moment
+npm install momentjs
 ```
 
 2. Optimize distribution:
