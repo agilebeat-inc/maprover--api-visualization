@@ -18,3 +18,16 @@ functions:
         path: graphql
         method: get
         cors: true
+plugins:
+  - serverless-domain-manager
+custom:
+  customDomain:
+    domainName: 'visualization.api.maprover.io'
+    stage: ${self:provider.stage}
+    basePath: ''
+    certificateName: '*.api.maprover.io'
+    createRoute53Record: false
+    endpointType: 'edge'
+    securityPolicy: 'tls_1_2'
+    apiType: 'rest'
+    enabled: true
