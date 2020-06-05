@@ -20,6 +20,10 @@ functions:
         cors: true
 plugins:
   - serverless-domain-manager
+  - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
+  - serverless-plugin-custom-roles
+
 custom:
   customDomain:
     domainName: 'visualization.api.maprover.io'
@@ -30,4 +34,10 @@ custom:
     endpointType: 'edge'
     securityPolicy: 'tls_1_2'
     apiType: 'rest'
-    enabled: true
+    enabled: false
+  documentation:
+    api:
+      info:
+        version: "v0.0.1"
+        title: "Maprover API"
+        description: "Maprover Visualization API"

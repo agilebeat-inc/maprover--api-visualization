@@ -11,6 +11,7 @@
   "dependencies": {
     "apollo-server": "^2.14.1",
     "apollo-server-lambda": "^2.14.1",
+    "errorhandler": "^1.5.1",
     "graphql": "^15.0.0",
     "graphql-date": "^1.0.3",
     "lodash": "^4.17.15",
@@ -19,6 +20,10 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
-    "serverless-domain-manager": "^4.1.1"
+    "serverless-aws-documentation": "^1.1.0",
+    "serverless-domain-manager": "^4.1.1",
+    "serverless-plugin-custom-roles": "^1.1.1",
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-reqvalidator-plugin": "^1.0.3"
   }
 }
