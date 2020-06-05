@@ -43,6 +43,7 @@ const dataLoader = (function () {
   return {
     getData: function (URI) {
       if (rec_list.length == 0) {
+        console.log('Loading data');
         rec_list = loadData(URI);
       }
       return rec_list;
@@ -52,7 +53,6 @@ const dataLoader = (function () {
 
 const csvFilePath = './data/us-counties.csv';
 const statesData = dataLoader.getData(csvFilePath);
-console.log(statesData)
 
 const StateType = new GraphQLObjectType({
     name: 'State',
@@ -72,6 +72,7 @@ const RootQuery = new GraphQLObjectType({
             type: GraphQLList(StateType),
             args: {
                 state: { type: GraphQLString },
+                county: { type: GraphQLString },
                 start: { type: GraphQLString },
                 end: { type: GraphQLString }
             },
@@ -82,7 +83,7 @@ const RootQuery = new GraphQLObjectType({
                     let end = moment(args.end);
                     let isAfterStart = (start < odate);
                     let isBeofreOrEqualToEnd = (odate <= end);
-                    return ((o.state == args.state) && isAfterStart && isBeofreOrEqualToEnd)
+                    return ((o.state == args.state) && (o.county == args.county) && isAfterStart && isBeofreOrEqualToEnd)
                 });
                 return retset;
             }
