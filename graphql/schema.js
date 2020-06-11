@@ -82,7 +82,7 @@ const RootQuery = new GraphQLObjectType({
                   let end = moment(args.end);
                   let isAfterStart = (start < odate);
                   let isBeofreOrEqualToEnd = (odate <= end);
-                  if ('county' in o) {
+                  if ('county' in args) {
                     return ((o.state == args.state) && (o.county == args.county) && isAfterStart && isBeofreOrEqualToEnd);
                   } 
                   return ((o.state == args.state) && isAfterStart && isBeofreOrEqualToEnd);
