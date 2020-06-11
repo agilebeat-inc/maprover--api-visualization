@@ -2,7 +2,7 @@
   "name": "maprover--api-visualization",
   "version": "0.0.1",
   "description": "Visualization APIs for maprover ",
-  "main": "index.js",
+  "main": "local.js",
   "scripts": {
     "dev": "nodemon local.js"
   },
@@ -10,11 +10,11 @@
   "license": "MIT",
   "dependencies": {
     "@tensorflow/tfjs": "^2.0.0",
-    "apollo-server": "^2.14.2",
-    "apollo-server-lambda": "^2.14.2",
+    "apollo-server": "^2.14.3",
+    "apollo-server-lambda": "^2.14.3",
     "curlrequest": "^1.0.1",
     "errorhandler": "^1.5.1",
-    "graphql": "^15.0.0",
+    "graphql": "^15.1.0",
     "graphql-date": "^1.0.3",
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
@@ -26,6 +26,7 @@
     "serverless-domain-manager": "^4.1.1",
     "serverless-plugin-custom-roles": "^1.1.1",
     "serverless-python-requirements": "^5.1.0",
-    "serverless-reqvalidator-plugin": "^1.0.3"
+    "serverless-reqvalidator-plugin": "^1.0.3",
+    "run": "^1.4.0"
   }
 }

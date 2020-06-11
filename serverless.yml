@@ -23,7 +23,7 @@ plugins:
   - serverless-reqvalidator-plugin
   - serverless-aws-documentation
   - serverless-plugin-custom-roles
-
+  - serverless-python-requirements
 custom:
   customDomain:
     domainName: 'visualization.api.maprover.io'

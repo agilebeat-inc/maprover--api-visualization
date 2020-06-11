@@ -2,6 +2,14 @@
 
 ### Serverless (local development)
 
+1. Install packages
+
+```npm install apollo-server apollo-server-lambda graphql```
+
+2. Run local development environment
+
+```npm run dev```
+
 [Serverless GraphQL APIs with Node.js and Apollo](https://www.thomasmaximini.com/build-a-serverless-graphlql-api-with-apollo-server-on-aws-lambda)
 
 3. Install serverless plugins for development:

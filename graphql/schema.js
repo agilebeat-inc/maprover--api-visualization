@@ -43,7 +43,6 @@ const dataLoader = (function () {
   return {
     getData: function (URI) {
       if (rec_list.length == 0) {
-        console.log('Loading data');
         rec_list = loadData(URI);
       }
       return rec_list;
@@ -78,12 +77,15 @@ const RootQuery = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 let retset = _.filter(statesData, function (o) {
-                    let odate = moment(o.date);
-                    let start = moment(args.start);
-                    let end = moment(args.end);
-                    let isAfterStart = (start < odate);
-                    let isBeofreOrEqualToEnd = (odate <= end);
-                    return ((o.state == args.state) && (o.county == args.county) && isAfterStart && isBeofreOrEqualToEnd)
+                  let odate = moment(o.date);
+                  let start = moment(args.start);
+                  let end = moment(args.end);
+                  let isAfterStart = (start < odate);
+                  let isBeofreOrEqualToEnd = (odate <= end);
+                  if ('county' in o) {
+                    return ((o.state == args.state) && (o.county == args.county) && isAfterStart && isBeofreOrEqualToEnd);
+                  } 
+                  return ((o.state == args.state) && isAfterStart && isBeofreOrEqualToEnd);
                 });
                 return retset;
             }
