@@ -2,7 +2,7 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 const moment = require('moment');
-const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = graphql;
+const { GraphQLSchema, GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLFloat } = graphql;
 const fs = require('fs');
 
 const dataLoader = (function () {
@@ -50,49 +50,73 @@ const dataLoader = (function () {
   }
 })();
 
-const csvFilePath = './data/us-counties.csv';
+const csvFilePath = './data/covid_significant_events.csv';
 const statesData = dataLoader.getData(csvFilePath);
 
 const StateType = new GraphQLObjectType({
-    name: 'State',
-    fields: () => ({
-        state: { type: GraphQLString },
-        county: { type: GraphQLString },
-        date: { type: GraphQLString },
-        cases: { type: GraphQLInt },
-        deaths: { type: GraphQLInt }
-    }),
+  name: 'State',
+  fields: () => ({
+    state: { type: GraphQLString },
+    county: { type: GraphQLString },
+    date: { type: GraphQLString },
+    cases: { type: GraphQLInt },
+    deaths: { type: GraphQLInt },
+    rolling_new_cases_std: { type: GraphQLInt },
+    rolling_new_cases_extreme_high: { type: GraphQLFloat },
+    rolling_new_cases_extreme_low: { type: GraphQLFloat },
+    new_cases_significance: { type: GraphQLString },
+  }),
 });
 
 const RootQuery = new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-        query: {
-            type: GraphQLList(StateType),
-            args: {
-                state: { type: GraphQLString },
-                county: { type: GraphQLString },
-                start: { type: GraphQLString },
-                end: { type: GraphQLString }
-            },
-            resolve(parent, args) {
-                let retset = _.filter(statesData, function (o) {
-                  let odate = moment(o.date);
-                  let start = moment(args.start);
-                  let end = moment(args.end);
-                  let isAfterStart = (start < odate);
-                  let isBeofreOrEqualToEnd = (odate <= end);
-                  if ('county' in args) {
-                    return ((o.state == args.state) && (o.county == args.county) && isAfterStart && isBeofreOrEqualToEnd);
-                  } 
-                  return ((o.state == args.state) && isAfterStart && isBeofreOrEqualToEnd);
-                });
-                return retset;
+  name: 'RootQueryType',
+  fields: {
+    query: {
+      type: GraphQLList(StateType),
+      args: {
+        state: { type: GraphQLString },
+        county: { type: GraphQLString },
+        ncs_filter: { type: GraphQLString },
+        start: { type: GraphQLString },
+        end: { type: GraphQLString }
+      },
+      resolve(parent, args) {
+        if ('state' in args) {
+          let retset = _.filter(statesData, function (o) {
+            let finalIsKept = true
+            let odate = moment(o.date);
+            let start = moment(args.start);
+            let end = moment(args.end);
+            let onew_cases_significance = (o.new_cases_significance == 'True');
+            let isAfterStart = (start < odate);
+            let isBeofreOrEqualToEnd = (odate <= end);
+            for (let arg in args) {
+              if (arg == "county")
+                finalIsKept = finalIsKept && (o.county == args.county);
+              if (arg == "state")
+                finalIsKept = finalIsKept && (o.state == args.state);
+              if (arg == "state")
+                finalIsKept = finalIsKept && (o.state == args.state);
+              if (arg == "start")
+                finalIsKept = finalIsKept && isAfterStart
+              if (arg == "end")
+                finalIsKept = finalIsKept && isBeofreOrEqualToEnd
+              if (arg == "ncs_filter")
+                if (args.ncs_filter == "True")
+                  finalIsKept = finalIsKept && onew_cases_significance;
+                else
+                  finalIsKept = finalIsKept && !onew_cases_significance;
             }
-        }
+            return finalIsKept;
+          });
+          return retset;
+        } 
+        return statesData
+      }
     }
+  }
 });
 
 module.exports = new GraphQLSchema({
-    query: RootQuery
+  query: RootQuery
 })

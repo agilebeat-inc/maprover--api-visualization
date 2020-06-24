@@ -5,6 +5,7 @@
 1. Install packages
 
 ```npm install apollo-server apollo-server-lambda graphql nodemon lodash moment```
+```npm install mocha --save-dev```
 
 2. Run local development environment
 
