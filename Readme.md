@@ -4,7 +4,7 @@
 
 1. Install packages
 
-```npm install apollo-server apollo-server-lambda graphql```
+```npm install apollo-server apollo-server-lambda graphql nodemon lodash```
 
 2. Run local development environment
 
