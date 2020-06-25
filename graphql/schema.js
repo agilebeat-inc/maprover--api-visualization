@@ -81,31 +81,27 @@ const RootQuery = new GraphQLObjectType({
         end: { type: GraphQLString }
       },
       resolve(parent, args) {
-        if ('state' in args) {
+        if ('state' in args || 'county' in args || 'start' in args || 'end' in args || 'ncs_filter' in args) {
           let retset = _.filter(statesData, function (o) {
             let finalIsKept = true
             let odate = moment(o.date);
             let start = moment(args.start);
             let end = moment(args.end);
-            let onew_cases_significance = (o.new_cases_significance == 'True');
             let isAfterStart = (start < odate);
             let isBeofreOrEqualToEnd = (odate <= end);
+            let is_true_ncs_filter = (o.ncs_filter == "True")
+            //console.log(isBeofreOrEqualToEnd);
             for (let arg in args) {
               if (arg == "county")
                 finalIsKept = finalIsKept && (o.county == args.county);
               if (arg == "state")
                 finalIsKept = finalIsKept && (o.state == args.state);
-              if (arg == "state")
-                finalIsKept = finalIsKept && (o.state == args.state);
               if (arg == "start")
-                finalIsKept = finalIsKept && isAfterStart
+                finalIsKept = finalIsKept && isAfterStart;
               if (arg == "end")
-                finalIsKept = finalIsKept && isBeofreOrEqualToEnd
+                finalIsKept = finalIsKept && isBeofreOrEqualToEnd;
               if (arg == "ncs_filter")
-                if (args.ncs_filter == "True")
-                  finalIsKept = finalIsKept && onew_cases_significance;
-                else
-                  finalIsKept = finalIsKept && !onew_cases_significance;
+                  finalIsKept = finalIsKept && (args.ncs_filter == o.new_cases_significance);
             }
             return finalIsKept;
           });
