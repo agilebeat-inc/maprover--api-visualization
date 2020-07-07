@@ -5,6 +5,8 @@ provider:
   name: aws
   runtime: nodejs12.x
   timeout: 30
+  deploymentBucket:
+    name: serverless.maprover.deployment
 functions:
   graphql:
     # this is formatted as <FILENAME>.<HANDLER>
